@@ -8,47 +8,100 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
-
+        android:layout_height="fill_parent"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="4dp"
+        android:paddingTop="4dp" >
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|top">
+            android:layout_gravity="center_horizontal|top" >
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="z"
+                android:textSize="18sp"/>
             <EditText
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/barcodeText"
-                android:layout_weight="1" />
-
-
-
-
+                android:layout_weight="1"
+                android:inputType="number"/>
             <Button
+                android:id="@+id/submit_zid"
+                android:text="Submit"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Scan"
-                android:id="@+id/scanButton"
-                android:onClick="scanNow" />
+                android:layout_height="wrap_content"/>
+
+
+
+
+
         </LinearLayout>
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|top">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Please scan a barcode"
             android:id="@+id/cseText"
             android:layout_gravity="center_horizontal|top" />
-    </LinearLayout>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="128dp"
+            android:text="Scan"
+            android:id="@+id/scanButton"
+            android:onClick="scanNow"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/arc_text"
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:text="Arc Member"
+            android:textSize="20sp"
+            android:background="@color/light_grey"
+            android:gravity="center"/>
+
+        <LinearLayout
+            android:id="@+id/arc_button_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/light_grey" >
+            <Button
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Yes"
+                android:background="@android:color/transparent" />
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="#AAAAAA"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"/>
+            <Button
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="No"
+                android:background="@android:color/transparent" />
+        </LinearLayout>
 
         <View
-            android:layout_height="match_parent"
             android:layout_width="match_parent"
-            android:id="@+id/color_box"/>
+            android:layout_height="1dp"
+            android:background="#AAAAAA"/>
+
+        <TextView
+            android:id="@+id/csesoc_text"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:text="CSESoc Member"
+            android:textSize="20dp"
+            android:background="@color/light_grey"
+            android:gravity="center"/>
 
     </LinearLayout>
 

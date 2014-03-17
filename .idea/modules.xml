@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Bark3/Bark3.iml" filepath="$PROJECT_DIR$/Bark3/Bark3.iml" />
       <module fileurl="file://$PROJECT_DIR$/Bark3Project.iml" filepath="$PROJECT_DIR$/Bark3Project.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bark-android.iml" filepath="$PROJECT_DIR$/bark-android.iml" />
     </modules>
   </component>
 </project>
