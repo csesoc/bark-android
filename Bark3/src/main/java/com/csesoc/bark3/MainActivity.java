@@ -54,6 +54,22 @@ public class MainActivity extends ActionBarActivity {
                 retrieveSiteData(zid);
             }
         });
+
+        Button arcYesButton = (Button)findViewById(R.id.arc_yes_button);
+        Button arcNoButton = (Button)findViewById(R.id.arc_no_button);
+
+        arcYesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("HI", "YES");
+            }
+        });
+        arcNoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("HI", "NO");
+            }
+        });
     }
 
 
