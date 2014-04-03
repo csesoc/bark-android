@@ -3,7 +3,6 @@ package com.csesoc.bark3;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -16,30 +15,26 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.Locale;
-
 
 public class MainActivity extends ActionBarActivity {
-
-    public TextToSpeech mTts;
-    // This code can be any value you want, its just a checksum.
-    private static final int MY_DATA_CHECK_CODE = 1234;
+    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if (getIntent().hasExtra("token")) {
+            token = getIntent().getExtras().getString("token");
+        } else {
+            token = "";
+        }
+
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
-
-        // Fire off an intent to check if a TTS engine is installed
-        Intent checkIntent = new Intent();
-        checkIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
-        startActivityForResult(checkIntent, MY_DATA_CHECK_CODE);
 
         Button submitButton = (Button)findViewById(R.id.submit_zid);
 
@@ -51,6 +46,10 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v){
                 EditText barcodeText = (EditText) v.getTag();
                 String zid = barcodeText.getText().toString();
+
+                if (zid.length() != 7 && isValidBarcode(zid)) { // if it's a whole barcode, not just a zid
+                    zid = zid.substring(2, 9);
+                }
                 retrieveSiteData(zid);
             }
         });
@@ -114,40 +113,6 @@ public class MainActivity extends ActionBarActivity {
                  Log.i("xZing", "Cancelled");
             }
         }
-
-        if (requestCode == MY_DATA_CHECK_CODE)
-        {
-            if (resultCode == TextToSpeech.Engine.CHECK_VOICE_DATA_PASS)
-            {
-                // success, create the TTS instance
-                mTts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
-                    @Override
-                    public void onInit(int status) {
-                        mTts.setLanguage(Locale.UK);
-//                        mTts.speak("hello world", TextToSpeech.QUEUE_FLUSH, null);
-                    }
-                });
-            }
-            else
-            {
-                // missing data, install it
-                Intent installIntent = new Intent();
-                installIntent.setAction(
-                        TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
-                startActivity(installIntent);
-            }
-        }
-    }
-
-    @Override
-    public void onDestroy() {
-        // Don't forget to shutdown!
-        if (mTts != null)
-        {
-            mTts.stop();
-            mTts.shutdown();
-        }
-        super.onDestroy();
     }
 
     public boolean isValidBarcode(String barcode) {
@@ -171,7 +136,7 @@ public class MainActivity extends ActionBarActivity {
         et.setText(zid);
         Context context = this;
         RetrieveSiteData task = new RetrieveSiteData(context);
-        task.execute("http://jwis261.web.cse.unsw.edu.au/cseid.php?id=z" + zid);
+        task.execute(zid, token);
         Log.d("zid", zid);
     }
 

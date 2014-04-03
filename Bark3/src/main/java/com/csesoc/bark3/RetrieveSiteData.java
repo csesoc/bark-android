@@ -10,9 +10,9 @@ import android.util.Log;
 import android.widget.TextView;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -28,17 +28,32 @@ public class RetrieveSiteData extends AsyncTask<String, Void, String> {
         mContext = context;
     }
     @Override
-    protected String doInBackground(String... urls) {
+    protected String doInBackground(String... params) {
         StringBuilder builder = new StringBuilder(16384);
 
-        DefaultHttpClient client = new DefaultHttpClient();
+        String zid = params[0];
+        String token = params[1];
 
-        HttpGet httpGet = new HttpGet(urls[0]);
-
-        Log.d("url", urls[0]);
+        String url = "http://jwis261.web.cse.unsw.edu.au/cseid.php?id=z" + zid; // to be determined
 
         try {
-            HttpResponse execute = client.execute(httpGet);
+            JSONObject request = new JSONObject();
+            request.put("token", token);
+            request.put("action", "check_in");
+            request.put("zid", zid);
+
+            DefaultHttpClient client = new DefaultHttpClient();
+
+            HttpPost httpPost = new HttpPost(url);
+            StringEntity holder = new StringEntity(request.toString());
+
+            httpPost.setEntity(holder);
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            HttpResponse execute = client.execute(httpPost);
+
+
             InputStream content = execute.getEntity().getContent();
 
             BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
@@ -57,87 +72,76 @@ public class RetrieveSiteData extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
-        String cse = "";
-        try{
-            JSONObject myJson = new JSONObject(result);
-            cse = myJson.optString("mem");
-        } catch (JSONException e ) {
-            Log.e("JSONException", e.getMessage());
-        }
-//        View colorbox = ((Activity)mContext).findViewById(R.id.container);
-        final TextView cseMember = (TextView) ((Activity)mContext).findViewById(R.id.csesoc_text);
+        try {
+            JSONObject resultJson = new JSONObject(result);
 
-        String mSpeakString;
+            final TextView cseText = (TextView) ((MainActivity)mContext).findViewById(R.id.cseText);
+            final TextView cseMember = (TextView) ((Activity)mContext).findViewById(R.id.csesoc_text);
+            Handler handler = new Handler();
 
-        Handler handler = new Handler();
-
-
-        if(cse.equals("true")) {
-//            mSpeakString = "Valid C.S.E.Soc Member";
-            mSpeakString = "Valid SeeEssEeSock Member";
-            cseMember.setBackgroundColor(mContext.getResources().getColor(android.R.color.holo_green_light));
-            cseMember.setTextColor(mContext.getResources().getColor(android.R.color.white));
-
-            final MediaPlayer mediaPlayer = MediaPlayer.create(mContext, Settings.System.DEFAULT_NOTIFICATION_URI);
-            mediaPlayer.start();
-
-            handler.postDelayed(new Runnable() {
+            Runnable revertColors = new Runnable() {
                 @Override
                 public void run() {
-                    mediaPlayer.stop();
+                    cseMember.setBackgroundColor(mContext.getResources().getColor(R.color.light_grey));
+                    cseMember.setTextColor(mContext.getResources().getColor(android.R.color.black));
+
+                    cseText.setText(R.string.default_cse_text);
                 }
-            }, 3000);
+            };
 
-        } else if (cse.equals("false")) {
-            mSpeakString = "This Person Is Not In SeeEssEeSock";
-            cseMember.setBackgroundColor(mContext.getResources().getColor(android.R.color.holo_red_light));
-            cseMember.setTextColor(mContext.getResources().getColor(android.R.color.white));
+            if (resultJson.getBoolean("success")) {
 
-            final MediaPlayer mediaPlayer = MediaPlayer.create(mContext, Settings.System.DEFAULT_ALARM_ALERT_URI);
-            mediaPlayer.start();
+                if (resultJson.getBoolean("is_cse")) {
+                    cseMember.setBackgroundColor(mContext.getResources().getColor(android.R.color.holo_green_light));
+                    cseMember.setTextColor(mContext.getResources().getColor(android.R.color.white));
 
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mediaPlayer.stop();
+                    final MediaPlayer mediaPlayer = MediaPlayer.create(mContext, Settings.System.DEFAULT_NOTIFICATION_URI);
+                    mediaPlayer.start();
+
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mediaPlayer.stop();
+                        }
+                    }, 3000);
+                } else {
+                    cseMember.setBackgroundColor(mContext.getResources().getColor(android.R.color.holo_red_light));
+                    cseMember.setTextColor(mContext.getResources().getColor(android.R.color.white));
+
+                    final MediaPlayer mediaPlayer = MediaPlayer.create(mContext, Settings.System.DEFAULT_ALARM_ALERT_URI);
+                    mediaPlayer.start();
+
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mediaPlayer.stop();
+                        }
+                    }, 3000);
                 }
-            }, 3000);
 
-        } else {
-            mSpeakString = "Network Error. Please try again.";
-            cseMember.setBackgroundColor(mContext.getResources().getColor(R.color.light_grey));
-            cseMember.setTextColor(mContext.getResources().getColor(android.R.color.black));
-        }
+                if (resultJson.get("is_arc") == null) { // wait for someone to press yes or no in arc buttons
+                    handler.postDelayed(revertColors, 3000);
+                } else { // wait 3 seconds
+                    handler.postDelayed(revertColors, 3000);
+                }
+
+                TextView studentInfo = (TextView) ((Activity)mContext).findViewById(R.id.student_info);
+
+                String studentInfoText = resultJson.getString("name") +
+                        "\n" + resultJson.getString("degree") +
+                        "\n" + resultJson.getJSONArray("courses").join(", ");
 
 
-        final TextView cseText = (TextView) ((MainActivity)mContext).findViewById(R.id.cseText);
+                studentInfo.setText(studentInfoText);
 
-        Runnable revertColors = new Runnable() {
-            @Override
-            public void run() {
+            } else {
+                Log.e("JSON Error", resultJson.getString("error"));
                 cseMember.setBackgroundColor(mContext.getResources().getColor(R.color.light_grey));
                 cseMember.setTextColor(mContext.getResources().getColor(android.R.color.black));
-
-                cseText.setText(R.string.default_cse_text);
             }
-        };
-
-        boolean arcUnknown = true;
-
-        if (arcUnknown) {
-            handler.postDelayed(revertColors, 3000);
-        } else {
-            handler.postDelayed(revertColors, 3000);
+        } catch (Exception e ) {
+            Log.e("Exception", e.getMessage());
         }
-
-//        final String speakString = mSpeakString;
-//        ((MainActivity)mContext).mTts = new TextToSpeech((Activity)mContext, new TextToSpeech.OnInitListener() {
-//            @Override
-//            public void onInit(int status) {
-//              ((MainActivity)mContext).mTts.setLanguage(Locale.US);
-//                ((MainActivity)mContext).mTts.speak(speakString, TextToSpeech.QUEUE_FLUSH, null);
-//            }
-//        });
     }
 
 }
