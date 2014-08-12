@@ -443,6 +443,7 @@ public class MainActivity extends ActionBarActivity {
 
                 } else {
                     Log.e("JSON Error", resultJson.getString("error"));
+                    Toast.makeText(MainActivity.this, resultJson.getString("error"), Toast.LENGTH_LONG).show();
                     cseMember.setBackgroundColor(mContext.getResources().getColor(R.color.light_grey));
                     cseMember.setTextColor(mContext.getResources().getColor(android.R.color.black));
                 }
