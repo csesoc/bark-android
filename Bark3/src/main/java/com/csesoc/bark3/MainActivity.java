@@ -97,7 +97,7 @@ public class MainActivity extends ActionBarActivity {
         arcNoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new UpdateArc().execute(true);
+                new UpdateArc().execute(false);
             }
         });
     }
@@ -260,17 +260,21 @@ public class MainActivity extends ActionBarActivity {
         public String name = "";
         public String degree = "";
         public ArrayList<String> courses = new ArrayList<String>();
-        public int numScans = 0;
-        public boolean arc = false;
-        public boolean cse = false;
+        public Integer numScans = 0;
+        public Boolean arc = false;
+        public boolean arcKnown = false;
+        public Boolean cse = false;
 
-        public Student(String zid, String name, String degree, ArrayList<String> courses, int numScans, boolean arc, boolean cse) {
+        public Student(String zid, String name, String degree, ArrayList<String> courses, int numScans, Boolean arc, boolean cse) {
             this.zid = zid;
             this.name = name;
             this.degree = degree;
             this.courses = courses;
             this.numScans = numScans;
             this.arc = arc;
+            if (arc != null) {
+                this.arcKnown = true;
+            }
             this.cse = cse;
         }
         public Student(String zid, JSONObject checkin) {
@@ -288,6 +292,14 @@ public class MainActivity extends ActionBarActivity {
             } catch (JSONException e) {
                 e.printStackTrace();;
             }
+            // set arc to true or false, or null if it's not true or false.
+            try {
+                this.arc = checkin.getBoolean("is_arc");
+                this.arcKnown = true;
+            } catch (JSONException e) {
+                this.arc = null;
+                this.arcKnown = false;
+            }
         }
         public Student(Student student) {
             this.zid = student.zid;
@@ -296,6 +308,7 @@ public class MainActivity extends ActionBarActivity {
             this.courses = student.courses;
             this.numScans = student.numScans;
             this.arc = student.arc;
+            this.arcKnown = student.arcKnown;
             this.cse = student.cse;
         }
         public Student() {}

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pre-dex-items>
+
+    <item
+        dex="/Users/ravrahn/Projects/Android/bark-android/Bark3/build/intermediates/pre-dexed/debug/support-v4-19.0.0-503aee605eb87317988fb05a43739df3961de8f4.jar"
+        jar="/Users/ravrahn/adt-bundle-mac/sdk/extras/android/m2repository/com/android/support/support-v4/19.0.0/support-v4-19.0.0.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="afee690af14bd2c32d400cdf78e746fd45c386fa"/>
+    <item
+        dex="/Users/ravrahn/Projects/Android/bark-android/Bark3/build/intermediates/pre-dexed/debug/classes-1ca1eb780b26ef39fc81519f9c712c7beb53aeff.jar"
+        jar="/Users/ravrahn/Projects/Android/bark-android/Bark3/build/intermediates/exploded-aar/com.android.support/appcompat-v7/19.0.0/classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="eb69b5c2e53e59d82f7439f3217f46f9d98f0c89"/>
+
+</pre-dex-items>
