@@ -8,7 +8,12 @@
 
     <style name="ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@color/primary</item>
+        <item name="android:titleTextStyle">@style/Title</item>
         <item name="android:subtitleTextStyle">@style/Subtitle</item>
+    </style>
+
+    <style name="Title" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">@android:color/black</item>
     </style>
 
     <style name="Subtitle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Subtitle">

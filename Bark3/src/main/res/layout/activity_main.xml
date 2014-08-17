@@ -27,31 +27,27 @@
             <EditText
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:textSize="18sp"
                 android:id="@+id/barcodeText"
                 android:layout_weight="1"
                 android:inputType="number"/>
-            <Button
-                android:id="@+id/submit_zid"
-                android:text="Submit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-
-
-
 
         </LinearLayout>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/default_cse_text"
-            android:id="@+id/cseText"
-            android:layout_gravity="center_horizontal|top" />
+            android:fontFamily="sans-serif-condensed"
+            android:id="@+id/error_text"
+            android:layout_gravity="center_horizontal|top"
+            android:layout_margin="8dp"/>
+
         <Button
             android:layout_width="match_parent"
-            android:layout_height="128dp"
-            android:text="Scan"
-            android:id="@+id/scanButton"
+            android:layout_height="64dp"
+            android:text="@string/scan_button"
+            android:id="@+id/scan_button"
             android:onClick="scanNow"
             android:layout_marginBottom="16dp" />
 
@@ -60,73 +56,129 @@
         <LinearLayout
             android:id="@+id/arc_button_container"
             android:layout_width="match_parent"
-            android:layout_height="64dp" >
+            android:layout_height="64dp"
+            android:layout_marginBottom="8dp" >
             <Button
                 android:id="@+id/arc_yes_button"
                 android:layout_width="64dp"
                 android:layout_height="match_parent"
-                android:text="Yes"
+                android:text="@string/arc_yes_button"
                 android:fontFamily="sans-serif-condensed"
                 android:textSize="18sp"
                 android:background="@drawable/yes_button" />
-            <View
-                android:layout_width="6dp"
-                android:layout_height="match_parent"
-                android:background="@color/transparent"/>
             <TextView
                 android:id="@+id/arc_text"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Arc Member"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:text="@string/arc_text"
                 android:textSize="20sp"
                 android:textStyle="italic"
                 android:fontFamily="sans-serif-condensed"
                 android:gravity="center"
                 android:background="@color/light_grey" />
-            <View
-                android:layout_width="6dp"
-                android:layout_height="match_parent"
-                android:background="@color/transparent"/>
             <Button
                 android:id="@+id/arc_no_button"
                 android:layout_width="64dp"
                 android:layout_height="match_parent"
-                android:text="No"
+                android:text="@string/arc_no_button"
                 android:fontFamily="sans-serif-condensed"
                 android:textSize="18sp"
                 android:background="@drawable/no_button" />
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="8dp"/>
-
         <TextView
             android:id="@+id/csesoc_text"
             android:layout_width="match_parent"
             android:layout_height="64dp"
-            android:text="CSESoc Member"
+            android:layout_marginBottom="8dp"
+            android:text="@string/csesoc_text"
             android:textSize="20sp"
             android:textStyle="italic"
             android:fontFamily="sans-serif-condensed"
             android:background="@color/light_grey"
             android:gravity="center"/>
 
-        <View
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="8dp" />
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1" >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/student_name_title"
+                    android:textSize="12sp"
+                    android:fontFamily="sans-serif-condensed"/>
+                <TextView
+                    android:id="@+id/student_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="8dp"
+                    android:fontFamily="sans-serif-light"
+                    android:textSize="16sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="right">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/student_zid_title"
+                    android:textSize="12sp"
+                    android:fontFamily="sans-serif-condensed"/>
+                <TextView
+                    android:id="@+id/student_zid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="8dp"
+                    android:fontFamily="sans-serif-light"
+                    android:textSize="16sp"
+                    android:gravity="right"/>
+            </LinearLayout>
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/student_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/student_degree_title"
+            android:textSize="12sp"
+            android:fontFamily="sans-serif-condensed"/>
+        <TextView
+            android:id="@+id/student_degree"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"
-            android:text="John Smith\nComputer Science (3978)\nCOMP1927, COMP2041"
-            android:textSize="18sp"
-            android:background="@color/light_grey"
-            android:gravity="center"/>
+            android:paddingTop="2dp"
+            android:paddingBottom="8dp"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif-light"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/student_courses_title"
+            android:textSize="12sp"
+            android:fontFamily="sans-serif-condensed"/>
+        <TextView
+            android:id="@+id/student_courses"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="2dp"
+            android:paddingBottom="8dp"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif-light"/>
+
+
 
     </LinearLayout>
 

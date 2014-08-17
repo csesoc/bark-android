@@ -128,5 +128,14 @@
     <string name="wifi_type_label">Type</string>
     <string name="default_cse_text">Please scan a barcode</string>
     <string name="title_activity_login">Bark</string>
+    <string name="scan_button">Scan</string>
+    <string name="arc_yes_button">Yes</string>
+    <string name="arc_no_button">No</string>
+    <string name="arc_text">Arc Member</string>
+    <string name="csesoc_text">CSESoc Member</string>
+    <string name="student_name_title">Name</string>
+    <string name="student_zid_title">zID</string>
+    <string name="student_degree_title">Degree</string>
+    <string name="student_courses_title">Courses</string>
 
 </resources>

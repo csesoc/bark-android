@@ -71,10 +71,7 @@ public class MainActivity extends ActionBarActivity {
                     .commit();
         }
 
-        Button submitButton = (Button)findViewById(R.id.submit_zid);
-
         EditText barcodeText = (EditText)findViewById(R.id.barcodeText);
-        submitButton.setTag(barcodeText);
         barcodeText.setImeActionLabel("Submit", KeyEvent.KEYCODE_ENTER);
         EditText.OnEditorActionListener submitListener = new EditText.OnEditorActionListener() {
             @Override
@@ -114,19 +111,6 @@ public class MainActivity extends ActionBarActivity {
             }
         };
         barcodeText.setOnEditorActionListener(submitListener);
-
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v){
-                EditText barcodeText = (EditText) v.getTag();
-                String zid = barcodeText.getText().toString();
-
-                if (zid.length() != 7 && isValidBarcode(zid)) { // if it's a whole barcode, not just a zid
-                    zid = zid.substring(2, 9);
-                }
-                updateStudent(zid);
-            }
-        });
 
         Button arcYesButton = (Button)findViewById(R.id.arc_yes_button);
         Button arcNoButton = (Button)findViewById(R.id.arc_no_button);
@@ -191,7 +175,7 @@ public class MainActivity extends ActionBarActivity {
 
     public boolean isValidBarcode(String barcode) {
         TextView cseText;
-        cseText = (TextView) findViewById(R.id.cseText);
+        cseText = (TextView) findViewById(R.id.error_text);
         if (barcode.length() != 14) {
             cseText.setText("Wrong length");
             return false;
@@ -458,7 +442,7 @@ public class MainActivity extends ActionBarActivity {
                     arcLabel.setBackgroundResource(R.color.light_grey);
                 }
 
-                final TextView cseText = (TextView) ((MainActivity)mContext).findViewById(R.id.cseText);
+                final TextView cseText = (TextView) ((MainActivity)mContext).findViewById(R.id.error_text);
                 final TextView cseMember = (TextView) ((Activity)mContext).findViewById(R.id.csesoc_text);
 
                 if (resultJson.getBoolean("success")) {
@@ -476,12 +460,24 @@ public class MainActivity extends ActionBarActivity {
                     }
 //                    cseMember.setTextColor(mContext.getResources().getColor(android.R.color.white));
 
-                    TextView studentInfo = (TextView) ((Activity)mContext).findViewById(R.id.student_info);
+                    TextView studentName = (TextView) ((Activity)mContext).findViewById(R.id.student_name);
+                    studentName.setText(student.name);
 
-                    String studentInfoText = student.toString();
+                    TextView studentZid = (TextView) ((Activity)mContext).findViewById(R.id.student_zid);
+                    studentZid.setText("z" + student.zid);
 
+                    TextView studentDegree = (TextView) ((Activity)mContext).findViewById(R.id.student_degree);
+                    studentDegree.setText(student.degree);
 
-                    studentInfo.setText(studentInfoText);
+                    TextView studentCourses = (TextView) ((Activity)mContext).findViewById(R.id.student_courses);
+                    String courses = "";
+                    for (String s : student.courses) {
+                        courses += s;
+                        if (student.courses.indexOf(s) != student.courses.size() - 1) {
+                            courses += ", ";
+                        }
+                    }
+                    studentCourses.setText(courses);
 
                 } else {
                     Log.e("JSON Error", resultJson.getString("error"));
