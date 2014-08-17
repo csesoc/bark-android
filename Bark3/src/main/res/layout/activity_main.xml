@@ -55,71 +55,78 @@
             android:onClick="scanNow"
             android:layout_marginBottom="16dp" />
 
-        <TextView
-            android:id="@+id/arc_text"
-            android:layout_width="match_parent"
-            android:layout_height="24dp"
-            android:text="Arc Member"
-            android:textSize="20sp"
-            android:background="@color/light_grey"
-            android:gravity="center"/>
+
 
         <LinearLayout
             android:id="@+id/arc_button_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/light_grey" >
+            android:layout_height="64dp" >
             <Button
                 android:id="@+id/arc_yes_button"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
+                android:layout_width="64dp"
+                android:layout_height="match_parent"
                 android:text="Yes"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="18sp"
                 android:background="@drawable/yes_button" />
             <View
-                android:layout_width="1dp"
+                android:layout_width="6dp"
                 android:layout_height="match_parent"
-                android:background="#AAAAAA"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="4dp"/>
+                android:background="@color/transparent"/>
+            <TextView
+                android:id="@+id/arc_text"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Arc Member"
+                android:textSize="20sp"
+                android:textStyle="italic"
+                android:fontFamily="sans-serif-condensed"
+                android:gravity="center"
+                android:background="@color/light_grey" />
+            <View
+                android:layout_width="6dp"
+                android:layout_height="match_parent"
+                android:background="@color/transparent"/>
             <Button
                 android:id="@+id/arc_no_button"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
+                android:layout_width="64dp"
+                android:layout_height="match_parent"
                 android:text="No"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="18sp"
                 android:background="@drawable/no_button" />
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#AAAAAA"/>
+            android:layout_height="8dp"/>
 
         <TextView
             android:id="@+id/csesoc_text"
             android:layout_width="match_parent"
             android:layout_height="64dp"
             android:text="CSESoc Member"
-            android:textSize="20dp"
+            android:textSize="20sp"
+            android:textStyle="italic"
+            android:fontFamily="sans-serif-condensed"
             android:background="@color/light_grey"
             android:gravity="center"/>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#AAAAAA"/>
+            android:layout_height="8dp" />
 
         <TextView
             android:id="@+id/student_info"
             android:layout_width="match_parent"
-            android:layout_height="96dp"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
             android:text="John Smith\nComputer Science (3978)\nCOMP1927, COMP2041"
             android:textSize="18sp"
             android:background="@color/light_grey"
             android:gravity="center"/>
-
-
 
     </LinearLayout>
 

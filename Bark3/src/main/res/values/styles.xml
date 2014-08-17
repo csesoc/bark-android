@@ -2,8 +2,24 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light">
-        <!-- Customize your theme here. -->
+        <item name="android:actionBarStyle">@style/ActionBar</item>
+        <item name="android:buttonStyle">@style/Button</item>
     </style>
+
+    <style name="ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/primary</item>
+        <item name="android:subtitleTextStyle">@style/Subtitle</item>
+    </style>
+
+    <style name="Subtitle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Subtitle">
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="Button" parent="@android:style/Widget.Holo.Button">
+        <item name="android:background">@drawable/button_selector</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
       <style name="ResultButton" parent="@android:style/Widget.Holo.Button.Borderless.Small">
     <item name="android:layout_width">0dip</item>
     <item name="android:layout_height">wrap_content</item>

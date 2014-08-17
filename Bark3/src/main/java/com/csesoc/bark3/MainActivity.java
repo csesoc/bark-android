@@ -12,11 +12,14 @@ import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -40,6 +43,7 @@ public class MainActivity extends ActionBarActivity {
     private static final String API_URL = "https://bark.csesoc.unsw.edu.au/api";
     private String token;
     private Student student;
+    private int maxScans;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +75,45 @@ public class MainActivity extends ActionBarActivity {
 
         EditText barcodeText = (EditText)findViewById(R.id.barcodeText);
         submitButton.setTag(barcodeText);
+        barcodeText.setImeActionLabel("Submit", KeyEvent.KEYCODE_ENTER);
+        EditText.OnEditorActionListener submitListener = new EditText.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (event != null) {
+                    if (actionId == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP) {
+
+                        EditText barcodeText = (EditText) v;
+                        String zid = barcodeText.getText().toString();
+
+                        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+
+                        if (zid.length() != 7 && isValidBarcode(zid)) { // if it's a whole barcode, not just a zid
+                            zid = zid.substring(2, 9);
+                        }
+                        updateStudent(zid);
+                        return true;
+                    }
+                    return false;
+                }
+                if (actionId == KeyEvent.KEYCODE_ENTER) {
+
+                    EditText barcodeText = (EditText) v;
+                    String zid = barcodeText.getText().toString();
+
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+
+                    if (zid.length() != 7 && isValidBarcode(zid)) { // if it's a whole barcode, not just a zid
+                        zid = zid.substring(2, 9);
+                    }
+                    updateStudent(zid);
+                    return true;
+                }
+                return true;
+            }
+        };
+        barcodeText.setOnEditorActionListener(submitListener);
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -234,7 +277,6 @@ public class MainActivity extends ActionBarActivity {
             String building = builder.toString();
             try {
                 JSONObject result = new JSONObject(building);
-                Log.d("arc_result", result.toString());
                 if (result.getBoolean("success")) {
                     return true;
                 }
@@ -247,8 +289,20 @@ public class MainActivity extends ActionBarActivity {
         @Override
         protected void onPostExecute(Boolean success) {
             if (success) {
-                // change button colour
-                Toast.makeText(MainActivity.this, ((Boolean)arc).toString(), Toast.LENGTH_SHORT).show();
+                // change the button colour
+                student.arc = arc;
+                Button yesButton = (Button) MainActivity.this.findViewById(R.id.arc_yes_button);
+                Button noButton = (Button) MainActivity.this.findViewById(R.id.arc_no_button);
+                TextView arcLabel = (TextView) MainActivity.this.findViewById(R.id.arc_text);
+                if (arc) {
+                    yesButton.setSelected(true);
+                    noButton.setSelected(false);
+                    arcLabel.setBackgroundResource(R.color.positive);
+                } else {
+                    yesButton.setSelected(false);
+                    noButton.setSelected(true);
+                    arcLabel.setBackgroundResource(R.color.negative);
+                }
             } else {
                 Toast.makeText(MainActivity.this, "Arc update failed", Toast.LENGTH_SHORT).show();
             }
@@ -384,55 +438,43 @@ public class MainActivity extends ActionBarActivity {
                 JSONObject resultJson = new JSONObject(result);
                 student = new Student(student.zid, resultJson);
 
+                Button yesButton = (Button) MainActivity.this.findViewById(R.id.arc_yes_button);
+                Button noButton = (Button) MainActivity.this.findViewById(R.id.arc_no_button);
+                TextView arcLabel = (TextView) MainActivity.this.findViewById(R.id.arc_text);
+                if (student.arcKnown) {
+                    // change arc button colour if arc is defined
+                    if (student.arc) {
+                        yesButton.setSelected(true);
+                        noButton.setSelected(false);
+                        arcLabel.setBackgroundResource(R.color.positive);
+                    } else {
+                        yesButton.setSelected(false);
+                        noButton.setSelected(true);
+                        arcLabel.setBackgroundResource(R.color.negative);
+                    }
+                } else {
+                    yesButton.setSelected(false);
+                    noButton.setSelected(false);
+                    arcLabel.setBackgroundResource(R.color.light_grey);
+                }
+
                 final TextView cseText = (TextView) ((MainActivity)mContext).findViewById(R.id.cseText);
                 final TextView cseMember = (TextView) ((Activity)mContext).findViewById(R.id.csesoc_text);
-                Handler handler = new Handler();
-
-                Runnable revertColors = new Runnable() {
-                    @Override
-                    public void run() {
-                        cseMember.setBackgroundColor(mContext.getResources().getColor(R.color.light_grey));
-                        cseMember.setTextColor(mContext.getResources().getColor(android.R.color.black));
-
-                        cseText.setText(R.string.default_cse_text);
-                    }
-                };
 
                 if (resultJson.getBoolean("success")) {
-
+                    // set the CSE member colour and play noise
                     if (student.cse) {
-                        cseMember.setBackgroundColor(mContext.getResources().getColor(android.R.color.holo_green_light));
-                        cseMember.setTextColor(mContext.getResources().getColor(android.R.color.white));
-
-                        final MediaPlayer mediaPlayer = MediaPlayer.create(mContext, Settings.System.DEFAULT_NOTIFICATION_URI);
-                        mediaPlayer.start();
-
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                mediaPlayer.stop();
-                            }
-                        }, 3000);
+                        cseMember.setBackgroundColor(mContext.getResources().getColor(R.color.positive));
+//                        TODO: uncomment this
+//                        final MediaPlayer mPlayer = MediaPlayer.create(mContext, R.raw.cse_beep);
+//                        mPlayer.start();
                     } else {
-                        cseMember.setBackgroundColor(mContext.getResources().getColor(android.R.color.holo_red_light));
-                        cseMember.setTextColor(mContext.getResources().getColor(android.R.color.white));
-
-                        final MediaPlayer mediaPlayer = MediaPlayer.create(mContext, Settings.System.DEFAULT_ALARM_ALERT_URI);
-                        mediaPlayer.start();
-
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                mediaPlayer.stop();
-                            }
-                        }, 3000);
+                        cseMember.setBackgroundColor(mContext.getResources().getColor(R.color.negative));
+//                        TODO: uncomment this
+//                        final MediaPlayer mPlayer = MediaPlayer.create(mContext, R.raw.not_cse_beep);
+//                        mPlayer.start();
                     }
-
-                    if (resultJson.get("is_arc") == null) { // wait for someone to press yes or no in arc buttons
-                        handler.postDelayed(revertColors, 3000);
-                    } else { // wait 3 seconds
-                        handler.postDelayed(revertColors, 3000);
-                    }
+//                    cseMember.setTextColor(mContext.getResources().getColor(android.R.color.white));
 
                     TextView studentInfo = (TextView) ((Activity)mContext).findViewById(R.id.student_info);
 

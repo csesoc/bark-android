@@ -2,17 +2,17 @@
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:drawable="@color/positive"
+        android:drawable="@color/primary"
         android:state_hovered="true" />
     <item
-        android:drawable="@color/positive"
+        android:drawable="@color/primary"
         android:state_selected="true" />
     <item
-        android:drawable="@color/positive"
+        android:drawable="@color/primary"
         android:state_pressed="true" />
     <item
-        android:drawable="@color/positive"
+        android:drawable="@color/primary"
         android:state_focused="true" />
-    <item
-        android:drawable="@color/light_grey" />
+
+    <item android:drawable="@color/light_grey" />
 </selector>
