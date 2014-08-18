@@ -20,8 +20,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -125,6 +128,27 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 new UpdateArc().execute(false);
+            }
+        });
+
+
+        final Spinner maxScansSpinner = (Spinner)findViewById(R.id.max_scans);
+        Integer[] items = new Integer[] {1,2,3,4};
+        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this,R.layout.max_scans_spinner_item, items);
+        maxScansSpinner.setAdapter(adapter);
+
+        maxScans = 1;
+        maxScansSpinner.setSelection(0);
+        
+        maxScansSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                maxScans = position + 1; // 0-based position, 1-based maxScans.
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
     }
@@ -386,7 +410,7 @@ public class MainActivity extends ActionBarActivity {
                 request.put("token", token);
                 request.put("action", "check_in");
                 request.put("zid", "z" + zid);
-                request.put("max_scans", 2);
+                request.put("max_scans", maxScans);
 
                 DefaultHttpClient client = new DefaultHttpClient();
 
@@ -469,10 +493,17 @@ public class MainActivity extends ActionBarActivity {
                     TextView studentDegree = (TextView) ((Activity)mContext).findViewById(R.id.student_degree);
                     studentDegree.setText(student.degree);
 
+                    TextView studentScans = (TextView) ((Activity)mContext).findViewById(R.id.student_scans);
+                    studentScans.setText(student.numScans.toString());
+
                     TextView studentCourses = (TextView) ((Activity)mContext).findViewById(R.id.student_courses);
                     String courses = "";
                     for (String s : student.courses) {
-                        courses += s;
+                        if (s.matches("COMP[0-9]{4}")) {
+                            courses += "cs" + s.substring(4);
+                        } else {
+                            courses += s;
+                        }
                         if (student.courses.indexOf(s) != student.courses.size() - 1) {
                             courses += ", ";
                         }

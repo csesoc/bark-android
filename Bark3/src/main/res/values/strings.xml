@@ -133,9 +133,11 @@
     <string name="arc_no_button">No</string>
     <string name="arc_text">Arc Member</string>
     <string name="csesoc_text">CSESoc Member</string>
+    <string name="max_scans_title">Max Scans</string>
     <string name="student_name_title">Name</string>
     <string name="student_zid_title">zID</string>
     <string name="student_degree_title">Degree</string>
-    <string name="student_courses_title">Courses</string>
+    <string name="student_scans_title">Scans</string>
+    <string name="student_courses_title">Computing Courses</string>
 
 </resources>
