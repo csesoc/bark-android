@@ -513,6 +513,9 @@ public class MainActivity extends ActionBarActivity {
                             courses += ", ";
                         }
                     }
+                    if (courses.equals("")) {
+                        courses = "None";
+                    }
                     studentCourses.setText(courses);
 
                 } else {
