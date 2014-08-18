@@ -139,7 +139,7 @@ public class MainActivity extends ActionBarActivity {
 
         maxScans = 1;
         maxScansSpinner.setSelection(0);
-        
+
         maxScansSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -296,6 +296,8 @@ public class MainActivity extends ActionBarActivity {
         }
         @Override
         protected void onPostExecute(Boolean success) {
+            TextView errorText = (TextView) MainActivity.this.findViewById(R.id.error_text);
+            errorText.setVisibility(View.GONE);
             if (success) {
                 // change the button colour
                 student.arc = arc;
@@ -312,7 +314,8 @@ public class MainActivity extends ActionBarActivity {
                     arcLabel.setBackgroundResource(R.color.negative);
                 }
             } else {
-                Toast.makeText(MainActivity.this, "Arc update failed", Toast.LENGTH_SHORT).show();
+                errorText.setText("Arc update failed");
+                errorText.setVisibility(View.VISIBLE);
             }
         }
     }
@@ -466,7 +469,9 @@ public class MainActivity extends ActionBarActivity {
                     arcLabel.setBackgroundResource(R.color.light_grey);
                 }
 
-                final TextView cseText = (TextView) ((MainActivity)mContext).findViewById(R.id.error_text);
+                final TextView errorText = (TextView) ((MainActivity)mContext).findViewById(R.id.error_text);
+                errorText.setVisibility(View.GONE);
+
                 final TextView cseMember = (TextView) ((Activity)mContext).findViewById(R.id.csesoc_text);
 
                 if (resultJson.getBoolean("success")) {
@@ -511,10 +516,33 @@ public class MainActivity extends ActionBarActivity {
                     studentCourses.setText(courses);
 
                 } else {
-                    Log.e("JSON Error", resultJson.getString("error"));
-                    Toast.makeText(MainActivity.this, resultJson.getString("error"), Toast.LENGTH_LONG).show();
+                    // show an error
+                    errorText.setText(resultJson.getString("error"));
+                    errorText.setVisibility(View.VISIBLE);
+
+                    // reset everything
                     cseMember.setBackgroundColor(mContext.getResources().getColor(R.color.light_grey));
-                    cseMember.setTextColor(mContext.getResources().getColor(android.R.color.black));
+
+                    yesButton.setSelected(false);
+                    noButton.setSelected(false);
+                    arcLabel.setBackgroundResource(R.color.light_grey);
+
+                    TextView studentName = (TextView) ((Activity)mContext).findViewById(R.id.student_name);
+                    studentName.setText("");
+
+                    TextView studentZid = (TextView) ((Activity)mContext).findViewById(R.id.student_zid);
+                    studentZid.setText("");
+
+                    TextView studentDegree = (TextView) ((Activity)mContext).findViewById(R.id.student_degree);
+                    studentDegree.setText("");
+
+                    TextView studentScans = (TextView) ((Activity)mContext).findViewById(R.id.student_scans);
+                    studentScans.setText("");
+
+                    TextView studentCourses = (TextView) ((Activity)mContext).findViewById(R.id.student_courses);
+                    studentCourses.setText("");
+
+                    student = null;
                 }
             } catch (Exception e ) {
                 Log.e("Exception", e.getMessage());
