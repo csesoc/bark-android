@@ -3,6 +3,7 @@ package com.csesoc.bark3;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,6 +29,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -40,6 +42,7 @@ import java.util.LinkedList;
 
 public class LoginActivity extends Activity {
     private static final String API_URL = "https://bark.csesoc.unsw.edu.au/api";
+    private static final String TOKENS_KEY = "tokens";
 
     private LinkedList<Token> tokens = new LinkedList<Token>();
     private TokenAdapter adapter;
@@ -48,6 +51,27 @@ public class LoginActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        String tokensString = sharedPref.getString(TOKENS_KEY, new JSONArray().toString());
+
+        try {
+            JSONObject tokensObj = new JSONObject(tokensString);
+
+            JSONArray tokensJSON = tokensObj.getJSONArray(TOKENS_KEY);
+
+            ArrayList<String> tokenStrings = new ArrayList<String>();
+            for (int i=0; i<tokensJSON.length(); i++) {
+                tokenStrings.add((String)tokensJSON.get(i));
+            }
+
+            for (String token : tokenStrings) {
+                new CheckToken().execute(token);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         Button scanButton = (Button)findViewById(R.id.token_scan_button);
 
@@ -144,13 +168,36 @@ public class LoginActivity extends Activity {
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+
+        JSONArray tokensArr = new JSONArray();
+
+        for (Token t : tokens) {
+            tokensArr.put(t.token);
+        }
+
+        JSONObject tokensObj = new JSONObject();
+        try {
+            tokensObj.put(TOKENS_KEY, tokensArr);
+
+            String tokensString = tokensObj.toString();
+
+            SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString(TOKENS_KEY, tokensString);
+            editor.apply();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent){
         if(requestCode == 0) {
             if(resultCode == RESULT_OK) {
                 String token = intent.getStringExtra("SCAN_RESULT");
                 String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
-
-                Log.d("token", token);
 
                 new CheckToken().execute(token);
 
@@ -237,9 +284,10 @@ public class LoginActivity extends Activity {
 
                 Token tokenObj = new Token(name, token, location, startTime, endTime, running);
 
-                ListView tokenList = (ListView) LoginActivity.this.findViewById(R.id.token_list);
-                tokens.add(0, tokenObj);
-                adapter.notifyDataSetChanged();
+                if (!tokens.contains(tokenObj)) {
+                    tokens.add(tokenObj);
+                    adapter.notifyDataSetChanged();
+                }
 
             } else {
                 EditText tokenText = (EditText) findViewById(R.id.token_text);
@@ -269,6 +317,12 @@ public class LoginActivity extends Activity {
             this.startTime = startTime;
             this.endTime = endTime;
             this.running = running;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            Token t = (Token) o;
+            return this.token.equals(t.token);
         }
     }
 
@@ -306,14 +360,24 @@ public class LoginActivity extends Activity {
 
             Token item = getItem(position);
             if (item!= null) {
+
                 TextView nameView = (TextView) view.findViewById(R.id.token_name);
                 if (nameView != null) {
                     nameView.setText(item.name);
                 }
-                TextView tokenView = (TextView) view.findViewById(R.id.token_location);
-                if (tokenView != null) {
-                    tokenView.setText(item.location);
+
+                TextView locationView = (TextView) view.findViewById(R.id.token_location);
+                if (locationView != null) {
+                    locationView.setText(item.location);
                 }
+
+//                TextView dateView = (TextView) view.findViewById(R.id.token_date);
+//                if (dateView != null) {
+//                    String dateString = "";
+//
+//                    dateView.setText(dateString);
+//                }
+
                 final int fPosition = position;
                 ImageView deleteView = (ImageView) view.findViewById(R.id.token_delete);
                 if (deleteView != null) {
