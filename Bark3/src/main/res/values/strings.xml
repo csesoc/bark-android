@@ -144,5 +144,7 @@
     <string name="hide_type_token">Hide</string>
     <string name="type_token_hint">Token</string>
     <string name="add_token">Add a Token</string>
+    <string name="scan_zid">Scan</string>
+    <string name="z">z</string>
 
 </resources>

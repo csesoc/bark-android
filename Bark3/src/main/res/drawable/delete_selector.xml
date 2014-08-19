@@ -2,16 +2,16 @@
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:drawable="@color/negative"
+        android:drawable="@color/half_negative"
         android:state_hovered="true" />
     <item
-        android:drawable="@color/negative"
+        android:drawable="@color/half_negative"
         android:state_selected="true" />
     <item
-        android:drawable="@color/negative"
+        android:drawable="@color/half_negative"
         android:state_pressed="true" />
     <item
-        android:drawable="@color/negative"
+        android:drawable="@color/half_negative"
         android:state_focused="true" />
     <item
         android:drawable="@android:color/transparent" />

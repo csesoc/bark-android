@@ -74,7 +74,17 @@ public class MainActivity extends ActionBarActivity {
                     .commit();
         }
 
-        EditText barcodeText = (EditText)findViewById(R.id.barcodeText);
+        Button scanButton = (Button) findViewById(R.id.zid_scan_button);
+        scanButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+                intent.putExtra("com.google.zxing.client.android.SCAN.SCAN_MODE", "QR_CODE_MODE");
+                startActivityForResult(intent, 0);
+            }
+        });
+
+        EditText barcodeText = (EditText)findViewById(R.id.barcode_text);
         barcodeText.setImeActionLabel("Submit", KeyEvent.KEYCODE_ENTER);
         EditText.OnEditorActionListener submitListener = new EditText.OnEditorActionListener() {
             @Override
@@ -153,34 +163,6 @@ public class MainActivity extends ActionBarActivity {
         });
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                return true;
-
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    public void scanNow(View view) {
-        Intent intent = new Intent("com.google.zxing.client.android.SCAN");
-        intent.putExtra("com.google.zxing.client.android.SCAN.SCAN_MODE", "QR_CODE_MODE");
-        startActivityForResult(intent, 0);
-    }
-
     public void onActivityResult(int requestCode, int resultCode, Intent intent){
         if(requestCode == 0)     {
             if(resultCode == RESULT_OK)         {
@@ -220,7 +202,7 @@ public class MainActivity extends ActionBarActivity {
 
     public void retrieveSiteData() {
         final EditText et;
-        et = (EditText) findViewById(R.id.barcodeText);
+        et = (EditText) findViewById(R.id.barcode_text);
         et.setText(student.zid);
         Context context = this;
         RetrieveSiteData task = new RetrieveSiteData(context);

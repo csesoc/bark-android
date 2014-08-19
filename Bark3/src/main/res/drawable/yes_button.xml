@@ -14,5 +14,5 @@
         android:drawable="@color/positive"
         android:state_focused="true" />
     <item
-        android:drawable="@color/light_grey" />
+        android:drawable="@color/half_positive" />
 </selector>

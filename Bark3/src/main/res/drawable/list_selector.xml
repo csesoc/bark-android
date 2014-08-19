@@ -2,16 +2,16 @@
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:drawable="@color/half_positive"
+        android:drawable="@color/half_primary"
         android:state_hovered="true" />
     <item
-        android:drawable="@color/half_positive"
+        android:drawable="@color/half_primary"
         android:state_selected="true" />
     <item
-        android:drawable="@color/half_positive"
+        android:drawable="@color/half_primary"
         android:state_pressed="true" />
     <item
-        android:drawable="@color/half_positive"
+        android:drawable="@color/half_primary"
         android:state_focused="true" />
     <item
         android:drawable="@android:color/transparent" />

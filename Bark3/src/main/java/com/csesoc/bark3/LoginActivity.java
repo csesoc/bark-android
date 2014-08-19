@@ -12,11 +12,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -70,6 +72,10 @@ public class LoginActivity extends Activity {
 
                         EditText tokenText = (EditText) v;
                         String token = tokenText.getText().toString();
+
+                        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+
                         new CheckToken().execute(token);
 
                         return true;
@@ -80,6 +86,10 @@ public class LoginActivity extends Activity {
 
                     EditText tokenText = (EditText) v;
                     String token = tokenText.getText().toString();
+
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+
                     new CheckToken().execute(token);
 
                     return true;
@@ -131,27 +141,6 @@ public class LoginActivity extends Activity {
                 }
             }
         });
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.login, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -324,6 +313,17 @@ public class LoginActivity extends Activity {
                 TextView tokenView = (TextView) view.findViewById(R.id.token_location);
                 if (tokenView != null) {
                     tokenView.setText(item.location);
+                }
+                final int fPosition = position;
+                ImageView deleteView = (ImageView) view.findViewById(R.id.token_delete);
+                if (deleteView != null) {
+                    deleteView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            tokens.remove(fPosition);
+                            adapter.notifyDataSetChanged();
+                        }
+                    });
                 }
             }
 

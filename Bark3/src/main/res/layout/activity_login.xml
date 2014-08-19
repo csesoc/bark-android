@@ -8,19 +8,6 @@
         android:orientation="horizontal"
         android:animateLayoutChanges="true" >
 
-        <ImageView
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@drawable/ic_action_add"
-            android:tag="@string/add_token"
-            android:layout_margin="8dp" />
-        <View
-            android:layout_width="1px"
-            android:layout_height="match_parent"
-            android:background="@color/primary"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp" />
-
         <Button
             android:id="@+id/token_scan_button"
             android:layout_width="0dp"
@@ -62,5 +49,6 @@
         android:layout_height="wrap_content"
         android:divider="@color/primary"
         android:dividerHeight="1px"
+        android:listSelector="@drawable/list_selector"
         android:animateLayoutChanges="true" />
 </LinearLayout>
