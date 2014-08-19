@@ -27,6 +27,7 @@
         </activity>
         <activity
             android:name="com.csesoc.bark3.MainActivity"
+            android:parentActivityName=".LoginActivity"
             android:label="@string/title_activity_login" />
     </application>
 

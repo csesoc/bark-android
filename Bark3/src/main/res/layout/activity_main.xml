@@ -30,16 +30,18 @@
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
                 android:id="@+id/barcodeText"
+                android:imeActionLabel="Submit"
                 android:layout_weight="1"
                 android:inputType="number"/>
 
         </LinearLayout>
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-condensed"
             android:id="@+id/error_text"
             android:layout_gravity="center"
+            android:gravity="center"
             android:background="@color/negative"
             android:padding="16dp"
             android:layout_marginTop="8dp"

@@ -139,5 +139,10 @@
     <string name="student_degree_title">Degree</string>
     <string name="student_scans_title">Scans</string>
     <string name="student_courses_title">Computing Courses</string>
+    <string name="scan_token">Scan</string>
+    <string name="show_type_token">Type</string>
+    <string name="hide_type_token">Hide</string>
+    <string name="type_token_hint">Token</string>
+    <string name="add_token">Add a Token</string>
 
 </resources>

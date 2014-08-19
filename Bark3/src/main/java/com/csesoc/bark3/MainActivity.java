@@ -505,7 +505,7 @@ public class MainActivity extends ActionBarActivity {
                     String courses = "";
                     for (String s : student.courses) {
                         if (s.matches("COMP[0-9]{4}")) {
-                            courses += "cs" + s.substring(4);
+                            courses += "CS" + s.substring(4);
                         } else {
                             courses += s;
                         }
