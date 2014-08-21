@@ -11,6 +11,8 @@ import android.os.Handler;
 import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -84,7 +86,7 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        EditText barcodeText = (EditText)findViewById(R.id.barcode_text);
+        final EditText barcodeText = (EditText)findViewById(R.id.barcode_text);
         barcodeText.setImeActionLabel("Submit", KeyEvent.KEYCODE_ENTER);
         EditText.OnEditorActionListener submitListener = new EditText.OnEditorActionListener() {
             @Override
@@ -102,6 +104,7 @@ public class MainActivity extends ActionBarActivity {
                             zid = zid.substring(2, 9);
                         }
                         updateStudent(zid);
+                        barcodeText.setText("");
                         return true;
                     }
                     return false;
@@ -118,12 +121,28 @@ public class MainActivity extends ActionBarActivity {
                         zid = zid.substring(2, 9);
                     }
                     updateStudent(zid);
+                    barcodeText.setText("");
                     return true;
                 }
                 return true;
             }
         };
         barcodeText.setOnEditorActionListener(submitListener);
+        barcodeText.addTextChangedListener(new TextWatcher(){
+            public void afterTextChanged(Editable s) {
+                if (barcodeText.getText().toString().contains("\n")) {
+                    String zid = barcodeText.getText().toString();
+
+                    if (zid.length() != 7 && isValidBarcode(zid)) { // if it's a whole barcode, not just a zid
+                        zid = zid.substring(2, 9);
+                    }
+                    updateStudent(zid);
+                    barcodeText.setText("");
+                }
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after){}
+            public void onTextChanged(CharSequence s, int start, int before, int count){}
+        });
 
         Button arcYesButton = (Button)findViewById(R.id.arc_yes_button);
         Button arcNoButton = (Button)findViewById(R.id.arc_no_button);
@@ -460,16 +479,13 @@ public class MainActivity extends ActionBarActivity {
                     // set the CSE member colour and play noise
                     if (student.cse) {
                         cseMember.setBackgroundColor(mContext.getResources().getColor(R.color.positive));
-//                        TODO: uncomment this
-//                        final MediaPlayer mPlayer = MediaPlayer.create(mContext, R.raw.cse_beep);
-//                        mPlayer.start();
+                        final MediaPlayer mPlayer = MediaPlayer.create(mContext, R.raw.success);
+                        mPlayer.start();
                     } else {
                         cseMember.setBackgroundColor(mContext.getResources().getColor(R.color.negative));
-//                        TODO: uncomment this
-//                        final MediaPlayer mPlayer = MediaPlayer.create(mContext, R.raw.not_cse_beep);
-//                        mPlayer.start();
+                        final MediaPlayer mPlayer = MediaPlayer.create(mContext, R.raw.warning);
+                        mPlayer.start();
                     }
-//                    cseMember.setTextColor(mContext.getResources().getColor(android.R.color.white));
 
                     TextView studentName = (TextView) ((Activity)mContext).findViewById(R.id.student_name);
                     studentName.setText(student.name);
