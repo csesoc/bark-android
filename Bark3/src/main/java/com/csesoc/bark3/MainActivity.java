@@ -92,7 +92,7 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (event != null) {
-                    if (actionId == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP) {
+                    if (event.getKeyCode() == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
 
                         EditText barcodeText = (EditText) v;
                         String zid = barcodeText.getText().toString();
@@ -105,44 +105,15 @@ public class MainActivity extends ActionBarActivity {
                         }
                         updateStudent(zid);
                         barcodeText.setText("");
+
                         return true;
                     }
                     return false;
                 }
-                if (actionId == KeyEvent.KEYCODE_ENTER) {
-
-                    EditText barcodeText = (EditText) v;
-                    String zid = barcodeText.getText().toString();
-
-                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-
-                    if (zid.length() != 7 && isValidBarcode(zid)) { // if it's a whole barcode, not just a zid
-                        zid = zid.substring(2, 9);
-                    }
-                    updateStudent(zid);
-                    barcodeText.setText("");
-                    return true;
-                }
-                return true;
+                return false;
             }
         };
         barcodeText.setOnEditorActionListener(submitListener);
-        barcodeText.addTextChangedListener(new TextWatcher(){
-            public void afterTextChanged(Editable s) {
-                if (barcodeText.getText().toString().contains("\n")) {
-                    String zid = barcodeText.getText().toString();
-
-                    if (zid.length() != 7 && isValidBarcode(zid)) { // if it's a whole barcode, not just a zid
-                        zid = zid.substring(2, 9);
-                    }
-                    updateStudent(zid);
-                    barcodeText.setText("");
-                }
-            }
-            public void beforeTextChanged(CharSequence s, int start, int count, int after){}
-            public void onTextChanged(CharSequence s, int start, int before, int count){}
-        });
 
         Button arcYesButton = (Button)findViewById(R.id.arc_yes_button);
         Button arcNoButton = (Button)findViewById(R.id.arc_no_button);
@@ -545,6 +516,10 @@ public class MainActivity extends ActionBarActivity {
 
                     student = null;
                 }
+
+                // refocus the barcode box
+                EditText barcodeText = (EditText) ((Activity)mContext).findViewById(R.id.barcode_text);
+                barcodeText.requestFocus();
             } catch (Exception e ) {
                 Log.e("Exception", e.getMessage());
             }
