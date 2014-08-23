@@ -289,6 +289,10 @@ public class MainActivity extends ActionBarActivity {
                 errorText.setText("Arc update failed");
                 errorText.setVisibility(View.VISIBLE);
             }
+
+            // refocus the barcode box
+            EditText barcodeText = (EditText) MainActivity.this.findViewById(R.id.barcode_text);
+            barcodeText.requestFocus();
         }
     }
 
@@ -488,6 +492,10 @@ public class MainActivity extends ActionBarActivity {
                     studentCourses.setText(courses);
 
                 } else {
+                    // play error sound
+                    final MediaPlayer mPlayer = MediaPlayer.create(mContext, R.raw.warning);
+                    mPlayer.start();
+
                     // show an error
                     errorText.setText(resultJson.getString("error"));
                     errorText.setVisibility(View.VISIBLE);
@@ -521,7 +529,12 @@ public class MainActivity extends ActionBarActivity {
                 EditText barcodeText = (EditText) ((Activity)mContext).findViewById(R.id.barcode_text);
                 barcodeText.requestFocus();
             } catch (Exception e ) {
-                Log.e("Exception", e.getMessage());
+                String msg = e.getMessage();
+                if (msg != null) {
+                    Log.e("Exception", msg);
+                } else {
+                    Log.e("Exception", "<null message>");
+                }
             }
         }
 
