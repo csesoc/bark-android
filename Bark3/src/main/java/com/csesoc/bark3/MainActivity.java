@@ -454,8 +454,13 @@ public class MainActivity extends ActionBarActivity {
                     // set the CSE member colour and play noise
                     if (student.cse) {
                         cseMember.setBackgroundColor(mContext.getResources().getColor(R.color.positive));
-                        final MediaPlayer mPlayer = MediaPlayer.create(mContext, R.raw.success);
-                        mPlayer.start();
+                        if (student.arcKnown) {
+                            final MediaPlayer mPlayer = MediaPlayer.create(mContext, R.raw.success);
+                            mPlayer.start();
+                        } else {
+                            final MediaPlayer mPlayer = MediaPlayer.create(mContext, R.raw.no_arc);
+                            mPlayer.start();
+                        }
                     } else {
                         cseMember.setBackgroundColor(mContext.getResources().getColor(R.color.negative));
                         final MediaPlayer mPlayer = MediaPlayer.create(mContext, R.raw.warning);
