@@ -1,26 +1,18 @@
 package com.csesoc.bark3;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.provider.Settings;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -28,7 +20,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -44,7 +35,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity {
     private static final String API_URL = "https://bark.csesoc.unsw.edu.au/api";
     private String token;
     private Student student;
@@ -59,15 +50,6 @@ public class MainActivity extends ActionBarActivity {
             token = getIntent().getExtras().getString("token");
         } else {
             token = "";
-        }
-
-        if (getIntent().hasExtra("name")) {
-            ActionBar ab = getActionBar();
-            ab.setTitle(getIntent().getExtras().getString("name"));
-        }
-        if (getIntent().hasExtra("location")) {
-            ActionBar ab = getActionBar();
-            ab.setSubtitle(getIntent().getExtras().getString("location"));
         }
 
         if (savedInstanceState == null) {
@@ -159,7 +141,7 @@ public class MainActivity extends ActionBarActivity {
                 String contents = intent.getStringExtra("SCAN_RESULT");
                 String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
                 if (isValidBarcode(contents)) {
-                    String zid = contents.toString().substring(2, 9);
+                    String zid = contents.substring(2, 9);
                     updateStudent(zid);
                 }
                 Log.i("xZing", "contents: "+contents+" format: "+format);              // Handle successful scan
@@ -211,8 +193,7 @@ public class MainActivity extends ActionBarActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
+            return inflater.inflate(R.layout.fragment_main, container, false);
         }
     }
 
@@ -297,14 +278,15 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private class Student {
-        public String zid = "";
         public String name = "";
-        public String degree = "";
-        public ArrayList<String> courses = new ArrayList<String>();
-        public Integer numScans = 0;
-        public Boolean arc = false;
-        public boolean arcKnown = false;
-        public Boolean cse = false;
+
+        private String zid = "";
+        private String degree = "";
+        private ArrayList<String> courses = new ArrayList<String>();
+        private Integer numScans = 0;
+        private Boolean arc = false;
+        private boolean arcKnown = false;
+        private Boolean cse = false;
 
         public Student(String zid, String name, String degree, ArrayList<String> courses, int numScans, Boolean arc, boolean cse) {
             this.zid = zid;
@@ -318,7 +300,7 @@ public class MainActivity extends ActionBarActivity {
             }
             this.cse = cse;
         }
-        public Student(String zid, JSONObject checkin) {
+        private Student(String zid, JSONObject checkin) {
             this.zid = zid;
             try {
                 this.name = checkin.getString("name");
@@ -352,7 +334,8 @@ public class MainActivity extends ActionBarActivity {
             this.arcKnown = student.arcKnown;
             this.cse = student.cse;
         }
-        public Student() {}
+
+        Student() {}
 
         @Override
         public String toString() {
@@ -371,10 +354,10 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
-    public class RetrieveSiteData extends AsyncTask<String, Void, String> {
+    private class RetrieveSiteData extends AsyncTask<String, Void, String> {
         private static final String API_URL = "https://bark.csesoc.unsw.edu.au/api";
         private Context mContext;
-        public RetrieveSiteData (Context context){
+        private RetrieveSiteData (Context context){
             mContext = context;
         }
         @Override

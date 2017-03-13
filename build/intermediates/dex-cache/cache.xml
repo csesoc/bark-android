@@ -1,17 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<pre-dex-items>
+<items version="2" >
 
     <item
-        dex="/Users/ravrahn/Projects/Android/bark-android/Bark3/build/intermediates/pre-dexed/debug/support-v4-19.0.0-503aee605eb87317988fb05a43739df3961de8f4.jar"
-        jar="/Users/ravrahn/adt-bundle-mac/sdk/extras/android/m2repository/com/android/support/support-v4/19.0.0/support-v4-19.0.0.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="afee690af14bd2c32d400cdf78e746fd45c386fa"/>
+        is-multidex="true"
+        jar="C:\Users\Nicola\.android\build-cache\d7db2c7f6a6eaa5a1c351501829ff791e5f58bb6\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="C:\Users\Nicola\Documents\bark-android\Bark3\build\intermediates\transforms\dex\debug\folders\1000\10\classes_0c2d39b0c0f90634c3fcc93ea61ae25ed2f2e38e\classes.dex" />
+    </item>
     <item
-        dex="/Users/ravrahn/Projects/Android/bark-android/Bark3/build/intermediates/pre-dexed/debug/classes-1ca1eb780b26ef39fc81519f9c712c7beb53aeff.jar"
-        jar="/Users/ravrahn/Projects/Android/bark-android/Bark3/build/intermediates/exploded-aar/com.android.support/appcompat-v7/19.0.0/classes.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="eb69b5c2e53e59d82f7439f3217f46f9d98f0c89"/>
+        is-multidex="true"
+        jar="C:\Users\Nicola\.android\build-cache\683907b8abda34d246b6b370dc5ecb064a30c95e\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="67eb33110dbacb46a48175b08ae0c96761d2c17d">
+        <dex dex="C:\Users\Nicola\Documents\bark-android\Bark3\build\intermediates\transforms\dex\debug\folders\1000\10\classes_5f95e5f11194bdbcb861182d14af48ea9fbe9c0c\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Nicola\.android\build-cache\9cd8f531799589bc83e62b729defb63f46659c62\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="fa0446a14ed5dd3725047d6399ffea771a564b30">
+        <dex dex="C:\Users\Nicola\Documents\bark-android\Bark3\build\intermediates\transforms\dex\debug\folders\1000\10\classes_e9934d369e013a09966ce7ba7b6d3ab2f14c3287\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Nicola\.android\build-cache\9b02f2f007877fb4d7deefde842eb280f18b7d4b\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="702d339bc0a81d21354cd7e2cf2b67225fa4a16c">
+        <dex dex="C:\Users\Nicola\Documents\bark-android\Bark3\build\intermediates\transforms\dex\debug\folders\1000\10\classes_3b5a8eb4a061f82a64e746669ec13925765555ab\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Nicola\Documents\bark-android\Bark3\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="1180d9ef2afa82a5cb24ad3b5bc65d808a4b4f39">
+        <dex dex="C:\Users\Nicola\Documents\bark-android\Bark3\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_aeedeb6ec56e36d8308da399497a6142e47a4298\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Nicola\Documents\bark-android\Bark3\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="c82741bc129dd5f99f11a4ab8666ae24262053b6">
+        <dex dex="C:\Users\Nicola\Documents\bark-android\Bark3\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_5a4cd7234f24a50dd8a524fb7bf8a0f573dc2915\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Nicola\.android\build-cache\7a83c650ae9c4227da7108edfd47e486fc86abee\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="ee394a892dd21c03a528139c1e8d4e0e1264ac84">
+        <dex dex="C:\Users\Nicola\Documents\bark-android\Bark3\build\intermediates\transforms\dex\debug\folders\1000\10\classes_824498710879c65f08b64c032495f079e38a45bf\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Nicola\.android\build-cache\4ce928de0c6cbf03e9be18c2a37b1a3e30126e60\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="810f41e5b7fd99f196ebeabe865ba2c54e7e76dc">
+        <dex dex="C:\Users\Nicola\Documents\bark-android\Bark3\build\intermediates\transforms\dex\debug\folders\1000\10\classes_ba751d2cb7daf8f50c12144c12d754d29e25f867\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Nicola\.gradle\caches\modules-2\files-2.1\org.jbundle.util.osgi.wrapped\org.jbundle.util.osgi.wrapped.org.apache.http.client\4.1.2\98c86e42679fe7ac066f6c242e0d14f0bce0bb7c\org.jbundle.util.osgi.wrapped.org.apache.http.client-4.1.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="98c86e42679fe7ac066f6c242e0d14f0bce0bb7c">
+        <dex dex="C:\Users\Nicola\Documents\bark-android\Bark3\build\intermediates\transforms\dex\debug\folders\1000\10\org.jbundle.util.osgi.wrapped.org.apache.http.client-4.1.2_ff777aaf0f9d3486155938614fcfae68af64423f\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Nicola\.android\build-cache\720a9e3f4c32ef614f238770c21ae13dd040bc80\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="e820b7be8c035dd522da4bc822e8a76c8e27921a">
+        <dex dex="C:\Users\Nicola\Documents\bark-android\Bark3\build\intermediates\transforms\dex\debug\folders\1000\10\classes_e839bb393d8d5f202bb553381cf4f5a8443f370e\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Nicola\.android\build-cache\8ad3dfe5158ee8dc47c4a650d5eb4b01d421876d\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="cb454b52545859ed2f24a6c01366805b0fa04b22">
+        <dex dex="C:\Users\Nicola\Documents\bark-android\Bark3\build\intermediates\transforms\dex\debug\folders\1000\10\classes_32d97272e79027f3b6f84970bd7c1a95295ba883\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Nicola\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\25.2.0\support-annotations-25.2.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="4a5a82a027706397fff621b22fd6fa796e91d7c5">
+        <dex dex="C:\Users\Nicola\Documents\bark-android\Bark3\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-25.2.0_d8fa780e48a07c2969abb1807bff5ac70e2937b4\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Nicola\.android\build-cache\97f9ea79b549e0d3a3a9c326121e8c90551b79b5\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="8fe8a8f77d651982ce5e18f6187dc4daf914ac57">
+        <dex dex="C:\Users\Nicola\Documents\bark-android\Bark3\build\intermediates\transforms\dex\debug\folders\1000\10\classes_34974ce6c41d3900d03ff5285f62ada5c19ec039\classes.dex" />
+    </item>
 
-</pre-dex-items>
+</items>
