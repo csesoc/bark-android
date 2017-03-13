@@ -127,8 +127,7 @@
     <string name="wifi_ssid_label">Network Name</string>
     <string name="wifi_type_label">Type</string>
     <string name="default_cse_text">Please scan a barcode</string>
-    <string name="title_activity_login">Bark</string>
-    <string name="scan_button">Scan</string>
+    <string name="title_activity_main">Bark</string>
     <string name="arc_yes_button">Yes</string>
     <string name="arc_no_button">No</string>
     <string name="arc_text">Arc Member</string>
@@ -139,8 +138,10 @@
     <string name="student_degree_title">Degree</string>
     <string name="student_scans_title">Scans</string>
     <string name="student_courses_title">Computing Courses</string>
-    <string name="scan_token">Scan</string>
-    <string name="show_type_token">Type</string>
+    <string name="new_event">New event</string>
+    <string name="existing_events">Existing events</string>
+    <string name="scan_qr_code">Scan QR code</string>
+    <string name="show_type_token">Type token</string>
     <string name="hide_type_token">Hide</string>
     <string name="type_token_hint">Token</string>
     <string name="add_token">Add a Token</string>

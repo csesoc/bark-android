@@ -26,7 +26,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="@string/scan_token"
+                android:text="@string/scan_zid"
                 android:background="@drawable/add_selector"/>
             <View
                 android:layout_width="1px"
@@ -38,7 +38,7 @@
                 android:id="@+id/z"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
+                android:layout_marginStart="12dp"
                 android:text="@string/z"
                 android:textSize="18sp" />
             <EditText
@@ -48,7 +48,7 @@
                 android:layout_weight="2"
                 android:textSize="18sp"
                 android:lines="1"
-                android:imeActionLabel="Submit"
+                android:imeOptions="actionDone"
                 android:inputType="text" />
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -157,7 +157,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:gravity="right">
+                android:gravity="end">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -203,7 +203,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:gravity="right">
+                android:gravity="end">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

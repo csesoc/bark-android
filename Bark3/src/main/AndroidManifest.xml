@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.csesoc.bark3.LoginActivity"
+            android:name="com.csesoc.bark3.MainActivity"
             android:label="@string/title_activity_login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,8 +23,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.csesoc.bark3.MainActivity"
-            android:parentActivityName=".LoginActivity"
+            android:name="com.csesoc.bark3.ScanActivity"
+            android:parentActivityName=".MainActivity"
             android:label="@string/title_activity_login" />
     </application>
 
